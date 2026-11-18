@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
+<meta name="description" content="Huy 的个人主页：物理在读，喜欢折腾服务器、AI 工具和双语字幕。" />
 <link rel="icon" href="data:," />
 <title>Huy — 个人主页</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,8 +23,6 @@
     --accent:#0f766e;
     --accent-ink:#0b5e57;
     --accent-soft:#e6f4f1;
-    --warm:#c2410c;
-    --warm-soft:#fff1e6;
     --chip:#f1f3f4;
     --shadow:0 1px 2px rgba(20,23,26,.05), 0 8px 24px rgba(20,23,26,.05);
     --radius:14px;
@@ -42,15 +41,13 @@
       --accent:#2dd4bf;
       --accent-ink:#5eead4;
       --accent-soft:#0f2a27;
-      --warm:#fb923c;
-      --warm-soft:#2a1a0f;
       --chip:#1e2327;
       --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
     }
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important;animation:none!important} }
   body{
     margin:0;
     background:var(--bg);
@@ -60,14 +57,40 @@
     line-height:1.7;
     -webkit-font-smoothing:antialiased;
   }
+  ::selection{background:var(--accent-soft);color:var(--accent-ink)}
   a{color:inherit}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
   button,[role="button"]{min-height:44px}
   .wrap{max-width:880px;margin:0 auto;padding:0 20px}
   .mono{font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace}
   .serif{font-family:"Noto Serif SC", "Songti SC", serif}
 
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:10;
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{max-width:880px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px}
+  .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:-.01em}
+  .nav-brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);flex:none}
+  .nav-brand .mono{font-size:12.5px;color:var(--muted);font-weight:400}
+  .nav-links{display:flex;gap:4px}
+  .nav-links a{
+    text-decoration:none;font-size:14px;font-weight:500;color:var(--ink-2);
+    padding:8px 12px;border-radius:8px;min-height:36px;display:inline-flex;align-items:center;
+  }
+  .nav-links a:hover{color:var(--ink);background:var(--bg-soft)}
+
   /* ---------- HERO ---------- */
-  .hero{padding:48px 0 36px;border-bottom:1px solid var(--line)}
+  .hero{padding:56px 0 36px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+  .hero::before{
+    content:"";position:absolute;inset:-140px -20% auto;height:420px;pointer-events:none;
+    background:radial-gradient(closest-side, var(--accent-soft), transparent 72%);
+    opacity:.75;
+  }
+  .hero > *{position:relative}
   .hero-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:28px}
   .status{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:var(--ink-2);background:var(--chip);border:1px solid var(--line);padding:6px 11px;border-radius:999px;line-height:1}
   .status i{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.18);display:block}
@@ -94,7 +117,9 @@
   .btn{
     display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:14.5px;
     padding:0 18px;min-height:46px;border-radius:8px;border:1px solid transparent;cursor:pointer;
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
   }
+  .btn:hover{transform:translateY(-1px)}
   .btn-primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
   .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
   .btn svg{width:16px;height:16px;flex:none}
@@ -129,31 +154,20 @@
   .about p:last-child{margin-bottom:0}
   .about strong{color:var(--ink)}
 
-  /* Now / exam */
-  .now-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}
-  .panel{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:20px}
+  /* Now */
+  .now-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .panel{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:20px;transition:border-color .2s ease, transform .2s ease}
+  .panel:hover{border-color:var(--line-strong);transform:translateY(-2px)}
   .panel h3{margin:0 0 6px;font-size:16px;font-weight:700}
   .panel p{margin:0;color:var(--ink-2);font-size:14.5px;line-height:1.7}
-  .subject-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:0}
-  .subject-list li{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px 0;border-top:1px solid var(--line);font-size:14.5px}
-  .subject-list li:first-child{border-top:0;padding-top:2px}
-  .subject-list .code{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--accent-ink);background:var(--accent-soft);padding:3px 8px;border-radius:5px;font-weight:600;white-space:nowrap}
-  .subject-list .name{color:var(--ink-2)}
-  .subject-list .name b{color:var(--ink);font-weight:600}
-  .count-panel{display:flex;flex-direction:column}
-  .count-num{font-family:"Noto Serif SC",serif;font-size:64px;line-height:1;font-weight:900;letter-spacing:-.03em;margin:8px 0 2px}
-  .count-num em{font-style:normal;font-size:20px;font-weight:700;color:var(--muted);letter-spacing:0}
-  .count-panel .sub{font-size:13.5px;color:var(--muted)}
-  .progress{margin-top:auto;padding-top:18px}
-  .progress-track{height:6px;background:var(--chip);border-radius:99px;overflow:hidden}
-  .progress-bar{height:100%;background:var(--accent);border-radius:99px;width:0%;transition:width .6s ease}
-  .progress-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:7px}
-  .exam-date{margin-top:14px;font-size:13px;color:var(--ink-2);background:var(--warm-soft);border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px;line-height:1.55}
-  .exam-date b{color:var(--warm)}
+  .panel .tagline-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .pulse{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.15);flex:none}
+  .panel .kicker{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 
   /* Projects */
   .proj-list{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .proj{border:1px solid var(--line);border-radius:var(--radius);padding:20px;background:var(--surface);display:flex;flex-direction:column;gap:8px}
+  .proj{border:1px solid var(--line);border-radius:var(--radius);padding:20px;background:var(--surface);display:flex;flex-direction:column;gap:8px;transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease}
+  .proj:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow)}
   .proj-icon{width:38px;height:38px;border-radius:9px;background:var(--bg-soft);border:1px solid var(--line);display:grid;place-items:center;color:var(--ink)}
   .proj-icon svg{width:19px;height:19px}
   .proj h3{margin:2px 0 0;font-size:15.5px;font-weight:700}
@@ -163,8 +177,9 @@
 
   /* Subdomains */
   .sub-table{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-  .sub-row{display:grid;grid-template-columns:1fr auto;gap:8px 16px;align-items:center;padding:15px 16px;background:var(--surface);border-bottom:1px solid var(--line)}
+  .sub-row{display:grid;grid-template-columns:1fr auto;gap:8px 16px;align-items:center;padding:15px 16px;background:var(--surface);border-bottom:1px solid var(--line);transition:background .15s ease}
   .sub-row:last-child{border-bottom:0}
+  .sub-row:hover{background:var(--bg-soft)}
   .sub-row .host{font-family:"JetBrains Mono",monospace;font-size:14px;font-weight:600;word-break:break-all}
   .sub-row .host i{font-style:normal;color:var(--accent)}
   .sub-row .desc{grid-column:1 / -1;font-size:13.5px;color:var(--muted);margin-top:-2px}
@@ -181,9 +196,28 @@
   .interest-list .v{color:var(--ink-2);font-size:14.5px;line-height:1.7}
   .interest-list .v b{color:var(--ink)}
 
+  /* Links */
+  .links{display:flex;flex-direction:column;gap:12px}
+  .link-card{
+    display:flex;align-items:center;gap:14px;
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--radius);padding:16px 18px;
+    color:var(--ink);text-decoration:none;
+    transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  .link-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow)}
+  .link-card .icon{width:38px;height:38px;flex:none;border-radius:9px;background:var(--bg-soft);border:1px solid var(--line);display:grid;place-items:center;color:var(--ink)}
+  .link-card .icon svg{width:20px;height:20px}
+  .link-card .t{font-weight:700;font-size:15px}
+  .link-card .d{color:var(--muted);font-size:13px}
+  .link-card .arrow{margin-left:auto;color:var(--muted);flex:none}
+  .link-card .arrow svg{width:18px;height:18px;display:block}
+
   footer{padding:28px 0 40px}
   .foot{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;justify-content:space-between;font-size:13px;color:var(--muted)}
   .foot .mono{font-size:12.5px}
+  .foot a{text-decoration:none}
+  .foot a:hover{color:var(--ink)}
   .toast{
     position:fixed;left:50%;bottom:22px;transform:translate(-50%,16px);opacity:0;pointer-events:none;
     background:var(--ink);color:var(--bg);font-size:13.5px;font-weight:500;padding:10px 16px;border-radius:8px;
@@ -191,20 +225,37 @@
   }
   .toast.show{opacity:1;transform:translate(-50%,0)}
 
+  /* Scroll reveal (JS only; content stays visible without JS) */
+  .js .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease, transform .5s ease}
+  .js .reveal.in{opacity:1;transform:none}
+
   @media (max-width:640px){
-    .hero{padding-top:32px}
+    .hero{padding-top:36px}
+    .nav-links{display:none}
     .dns-grid{grid-template-columns:1fr 1fr}
     .dns-cell:nth-child(2){border-right:0}
     .dns-cell:nth-child(1),.dns-cell:nth-child(2){border-bottom:1px solid var(--line)}
     .now-grid,.proj-list{grid-template-columns:1fr}
-    .count-num{font-size:56px}
     .interest-list li{gap:12px}
     .interest-list .k{width:58px}
   }
 </style>
 </head>
 <body>
-<div class="wrap">
+<nav class="nav" aria-label="站内导航">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#top"><span class="dot"></span>Huy <span class="mono">huy.xwx.me</span></a>
+    <div class="nav-links">
+      <a href="#about">关于</a>
+      <a href="#now">现在</a>
+      <a href="#projects">折腾</a>
+      <a href="#domains">子域名</a>
+      <a href="#links">链接</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap" id="top">
 
   <!-- HERO -->
   <header class="hero">
@@ -220,12 +271,12 @@
     </div>
 
     <h1>你好，我是 <span>Huy</span>。</h1>
-    <p class="hero-lead">物理本科在读，正在<strong>跨考电子信息</strong>。白天啃数学和数字电路，晚上折腾域名、服务器和各种小工具——这个页面，就是新域名 <strong class="mono" style="font-size:.92em">huy.xwx.me</strong> 的第一站。</p>
+    <p class="hero-lead">物理本科在读，正在准备<strong>跨专业考研</strong>。白天备考，晚上折腾域名、服务器和各种小工具——这个页面，就是新域名 <strong class="mono" style="font-size:.92em">huy.xwx.me</strong> 的第一站。</p>
 
     <div class="hero-meta">
-      <span>目标院校 · 长江大学</span>
-      <span>报考专业 · 电子信息 085400</span>
-      <span>方向 · 物理 → 电子信息</span>
+      <span>物理背景</span>
+      <span>正在备考</span>
+      <span>喜欢折腾</span>
     </div>
 
     <div class="hero-actions">
@@ -239,49 +290,39 @@
       <div class="dns-head"><b>域名信息</b><span class="mono">FurryBox DNS</span></div>
       <div class="dns-grid">
         <div class="dns-cell"><label>Domain</label><p class="mono">huy.xwx.me</p></div>
-        <div class="dns-cell"><label>Status</label><p>Active</p></div>
-        <div class="dns-cell"><label>Registered</label><p class="small">2026-11-17</p></div>
-        <div class="dns-cell"><label>Expires</label><p class="small">2027-11-17 · 剩 365 天</p></div>
+        <div class="dns-cell"><label>Status</label><p>在线</p></div>
+        <div class="dns-cell"><label>托管</label><p class="small">GitHub Pages</p></div>
+        <div class="dns-cell"><label>DNS</label><p class="small">FurryBox</p></div>
       </div>
     </div>
   </header>
 
   <!-- ABOUT -->
-  <section class="about" id="about">
+  <section class="about reveal" id="about">
     <div class="sec-head"><h2>关于我</h2><span class="mono">/ about</span><span class="line"></span></div>
-    <p>本科读物理，固体物理是正在修的课。比起一直待在原来的轨道上，我更想往工程那边靠一靠，所以决定跨考——目标是<strong>长江大学电子信息（085400）</strong>，专业课只考一门《数字电子技术》。</p>
-    <p>学习之外的时间大多花在折腾上：给自己搭能长期用的小服务、把字幕做成日中双语、研究怎么让一堆工具顺手地连在一起。这个域名刚注册下来，后面会慢慢把东西都迁到自己的地址上。</p>
+    <p>本科读物理，正在准备跨专业考研，想往工程方向走。比起一直待在原来的轨道上，更想动手做点实际的东西。</p>
+    <p>学习之外的时间大多花在折腾上：给自己搭能长期用的小服务、把字幕做成日中双语、研究怎么让一堆工具顺手地连在一起。这个域名刚拿下来，后面会慢慢把东西都迁到自己的地址上。</p>
   </section>
 
   <!-- NOW -->
-  <section id="now">
+  <section id="now" class="reveal">
     <div class="sec-head"><h2>现在在做什么</h2><span class="mono">/ now</span><span class="line"></span></div>
     <div class="now-grid">
       <div class="panel">
-        <h3>2027 考研备考</h3>
-        <p>初试四门，专业课用佘新平、蔡昌新主编《数字电子技术》（第三版）。已经把历年回忆真题按教材章节整理过一遍，复习就对着章节查漏补缺。</p>
-        <ul class="subject-list">
-          <li><span class="name"><b>思想政治理论</b></span><span class="code">101</span></li>
-          <li><span class="name"><b>日语</b> · 作文与翻译是重点</span><span class="code">203</span></li>
-          <li><span class="name"><b>数学（二）</b></span><span class="code">302</span></li>
-          <li><span class="name"><b>数字电子技术</b></span><span class="code">836</span></li>
-        </ul>
+        <div class="tagline-row"><span class="pulse"></span><span class="kicker">备考中</span></div>
+        <h3>按计划复习</h3>
+        <p>每天按自己的节奏推进，专业课是重头，基础课轮着来。进度不公开，稳稳走就是了。</p>
       </div>
-      <div class="panel count-panel">
-        <h3>距离初试</h3>
-        <div class="count-num"><span id="daysLeft">—</span><em> 天</em></div>
-        <p class="sub" id="daysSub">2026 年 12 月 19 — 20 日</p>
-        <div class="progress">
-          <div class="progress-track"><div class="progress-bar" id="progBar"></div></div>
-          <div class="progress-labels"><span>2026-11-17 今天</span><span>12-19 开考</span></div>
-        </div>
-        <div class="exam-date">复试考 <b>电子技术基础、单片机、C 语言</b>——初试结束就得接着准备，不能等出分。</div>
+      <div class="panel">
+        <div class="tagline-row"><span class="pulse"></span><span class="kicker">折腾中</span></div>
+        <h3>把服务迁回自己的域名</h3>
+        <p>把散落在临时链接上的服务，一个个迁到 huy.xwx.me 下面。地址要短、要稳、要自己说了算。</p>
       </div>
     </div>
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects">
+  <section id="projects" class="reveal">
     <div class="sec-head"><h2>折腾过的东西</h2><span class="mono">/ tinkering</span><span class="line"></span></div>
     <div class="proj-list">
       <article class="proj">
@@ -300,7 +341,7 @@
         <div class="proj-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 9h4M7 13h7M17 9h.01M14 17h3"/></svg></div>
         <h3>双语字幕</h3>
         <p>看番的固定流程：找同源 Netflix 字幕包，日语在上、中文在下，合并成 ASS + SRT 双份打包，在 Emby 里用 lenna 看。</p>
-        <div class="proj-tags"><span>日中双语</span><span>ASS / SRT</span><span>Emby</span></div>
+        <div class="proj-tags"><span>日语</span><span>ASS / SRT</span><span>Emby</span></div>
       </article>
       <article class="proj">
         <div class="proj-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
@@ -312,7 +353,7 @@
   </section>
 
   <!-- SUBDOMAINS -->
-  <section id="domains">
+  <section id="domains" class="reveal">
     <div class="sec-head"><h2>子域名规划</h2><span class="mono">/ dns</span><span class="line"></span></div>
     <div class="sub-table">
       <div class="sub-row">
@@ -328,23 +369,36 @@
         <span class="desc">备考笔记和折腾记录，写给自己看，也留给以后复盘</span>
       </div>
     </div>
-    <p class="sub-note">域名 2026-11-17 注册，FurryBox DNS 托管，目前 DNS 记录还是从零开始搭——这个主页是第一条。</p>
+    <p class="sub-note">域名由 FurryBox DNS 托管，记录从零开始搭——这个主页是第一条。</p>
   </section>
 
   <!-- INTERESTS -->
-  <section id="interests">
+  <section id="interests" class="reveal">
     <div class="sec-head"><h2>课余</h2><span class="mono">/ off-duty</span><span class="line"></span></div>
     <ul class="interest-list">
-      <li><span class="k">动漫</span><span class="v">在 Emby 上追番，字幕一定要<b>日中双语</b>，日语顺便当听力练。《电锯人》第一季的双语字幕就是自己合并打包的。</span></li>
-      <li><span class="k">音乐</span><span class="v">听歌要能下载成 <b>MP3</b> 留在本地，音质比在线播更重要。周杰伦《发如雪》是特意去找来听的。</span></li>
-      <li><span class="k">课程</span><span class="v">这学期在修<b>固体物理</b>，调研论文写过电动车电池，也写过中微子——物理的底子，跨考也用得上。</span></li>
+      <li><span class="k">动漫</span><span class="v">在 Emby 上追番，字幕坚持<b>日中双语</b>，顺便练听力。</span></li>
+      <li><span class="k">音乐</span><span class="v">听歌喜欢下载成 <b>MP3</b> 留在本地，音质比在线播更重要。</span></li>
+      <li><span class="k">课程</span><span class="v">这学期在修<b>固体物理</b>，物理的底子，跨考也用得上。</span></li>
     </ul>
+  </section>
+
+  <!-- LINKS -->
+  <section id="links" class="reveal">
+    <div class="sec-head"><h2>链接</h2><span class="mono">/ links</span><span class="line"></span></div>
+    <div class="links">
+      <a class="link-card" href="https://github.com/huy8421" target="_blank" rel="noopener">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg></span>
+        <span><span class="t">GitHub</span><br><span class="d">github.com/huy8421</span></span>
+        <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+      </a>
+    </div>
   </section>
 
   <footer>
     <div class="foot">
       <span>© 2026 Huy · huy.xwx.me</span>
       <span class="mono" id="footTime"></span>
+      <span><a href="#top">回到顶部 ↑</a> · 托管于 GitHub Pages</span>
     </div>
   </footer>
 </div>
@@ -353,7 +407,9 @@
 
 <script>
 (function(){
-  // Clock (Asia/Shanghai is the user's timezone context; use local device time to stay honest)
+  document.documentElement.classList.add('js');
+
+  // Clock (local device time)
   var clockEl = document.getElementById('clock');
   var footEl = document.getElementById('footTime');
   function tick(){
@@ -365,34 +421,14 @@
   }
   tick(); setInterval(tick, 1000);
 
-  // Countdown to the exam: 2026-12-19
-  var exam = new Date(2026, 11, 19, 0, 0, 0);
-  var start = new Date(2026, 10, 17, 0, 0, 0); // today, per build context
-  var today = new Date(); today.setHours(0,0,0,0);
-  var msDay = 86400000;
-  var left = Math.round((exam - today) / msDay);
-  var total = Math.round((exam - start) / msDay);
-  var daysEl = document.getElementById('daysLeft');
-  var subEl = document.getElementById('daysSub');
-  var barEl = document.getElementById('progBar');
-  if(daysEl){
-    if(left > 0){
-      daysEl.textContent = left;
-      subEl.textContent = '2026 年 12 月 19 — 20 日 · 初试';
-      var done = Math.max(0, total - left);
-      var pct = total > 0 ? Math.min(100, Math.max(2, Math.round(done/total*100))) : 0;
-      // Before the start reference, show a sliver so the track isn't empty-looking
-      if(left === total) pct = 2;
-      requestAnimationFrame(function(){ barEl.style.width = pct + '%'; });
-    } else if(left === 0){
-      daysEl.textContent = '0';
-      subEl.textContent = '就是今天 — 初试加油';
-      barEl.style.width = '100%';
-    } else {
-      daysEl.textContent = '—';
-      subEl.textContent = '初试已结束，等成绩与复试';
-      barEl.style.width = '100%';
-    }
+  // Scroll reveal
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold: 0.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
   }
 
   // Copy domain
